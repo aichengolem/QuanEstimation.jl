@@ -7,7 +7,7 @@ function update!(opt::ControlOpt, alg::PSO, obj, dynamics, output)
     ini_particle = ini_particle[1]
     ctrl_length = length(dynamics.data.ctrl[1])
     ctrl_num = length(dynamics.data.Hc)
-    particles = repeat(dynamics, p_num)
+    particles = repeat_system(dynamics, p_num)
 
     if typeof(max_episode) == Int
         max_episode = [max_episode, max_episode]
@@ -89,7 +89,7 @@ function update!(opt::ControlOpt, alg::PSO, obj, dynamics, output)
         end
         if ei % max_episode[2] == 0
             dynamics.data.ctrl = [gbest[k, :] for k = 1:ctrl_num]
-            particles = repeat(dynamics, p_num)
+            particles = repeat_system(dynamics, p_num)
         end
 
         set_f!(output, fit_out)
@@ -108,7 +108,7 @@ function update!(opt::StateOpt, alg::PSO, obj, dynamics, output)
     end
     ini_particle = ini_particle[1]
     dim = length(dynamics.data.ψ0)
-    particles = repeat(dynamics, p_num)
+    particles = repeat_system(dynamics, p_num)
 
     if typeof(max_episode) == Int
         max_episode = [max_episode, max_episode]
@@ -167,7 +167,7 @@ function update!(opt::StateOpt, alg::PSO, obj, dynamics, output)
         end
         if ei%max_episode[2] == 0
             dynamics.data.ψ0 = [gbest[i] for i in 1:dim]
-            particles = repeat(dynamics, p_num)
+            particles = repeat_system(dynamics, p_num)
         end
         set_f!(output, fit_out)
         set_buffer!(output, gbest)
@@ -386,7 +386,7 @@ function update!(opt::Mopt_Rotation, alg::PSO, obj, dynamics, output)
     #     append!(Lambda, [suN[i] for i in 1:length(suN)])
     # end
     
-    particles = repeat(s, p_num)
+    particles = repeat_system(s, p_num)
 
     if typeof(max_episode) == Int
         max_episode = [max_episode, max_episode]
@@ -478,7 +478,7 @@ function update!(opt::StateControlOpt, alg::PSO, obj, dynamics, output)
     dim = length(dynamics.data.ψ0)
     ctrl_length = length(dynamics.data.ctrl[1])
     ctrl_num = length(dynamics.data.Hc)
-    particles = repeat(dynamics, p_num)
+    particles = repeat_system(dynamics, p_num)
 
     if typeof(max_episode) == Int
         max_episode = [max_episode, max_episode]
@@ -588,7 +588,7 @@ function update!(opt::StateMeasurementOpt, alg::PSO, obj, dynamics, output)
     psi0, measurement0 = ini_particle
     dim = length(dynamics.data.ψ0)
     M_num = length(opt.M)
-    particles = repeat(dynamics, p_num)
+    particles = repeat_system(dynamics, p_num)
 
     if typeof(max_episode) == Int
         max_episode = [max_episode, max_episode]
@@ -705,7 +705,7 @@ function update!(opt::ControlMeasurementOpt, alg::PSO, obj, dynamics, output)
     ctrl_num = length(dynamics.data.Hc)
     dim = size(dynamics.data.ρ0)[1]
     M_num = length(opt.M)
-    particles = repeat(dynamics, p_num)
+    particles = repeat_system(dynamics, p_num)
 
     if typeof(max_episode) == Int
         max_episode = [max_episode, max_episode]
@@ -828,7 +828,7 @@ function update!(opt::StateControlMeasurementOpt, alg::PSO, obj, dynamics, outpu
     ctrl_num = length(dynamics.data.Hc)
     dim = length(dynamics.data.ψ0)
     M_num = length(opt.M)
-    particles = repeat(dynamics, p_num)
+    particles = repeat_system(dynamics, p_num)
 
     if typeof(max_episode) == Int
         max_episode = [max_episode, max_episode]

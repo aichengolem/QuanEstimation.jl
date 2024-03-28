@@ -4,7 +4,7 @@ function update!(opt::StateOpt, alg::NM, obj, dynamics, output)
         ini_state = [opt.psi]
     end
     dim = length(dynamics.data.ψ0)
-    nelder_mead = repeat(dynamics, p_num)
+    nelder_mead = repeat_system(dynamics, p_num)
 
     # initialize 
     if length(ini_state) > p_num

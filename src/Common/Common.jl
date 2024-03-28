@@ -19,12 +19,12 @@ end
 
 unzip(X) = map(x->getfield.(X, x), fieldnames(eltype(X)))
 
-function Base.repeat(system, N)
+function repeat_system(system, N)
     [deepcopy(system) for i in 1:N]
 end
 
-function Base.repeat(system, M, N)
-    reshape(repeat(system, M * N), M, N)
+function repeat_system(system, M, N)
+    reshape(repeat_system(system, M * N), M, N)
 end
 
 function filterZeros!(x::Matrix{T}) where {T <: Complex}

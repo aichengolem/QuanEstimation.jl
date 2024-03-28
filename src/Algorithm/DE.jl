@@ -7,7 +7,7 @@ function update!(opt::ControlOpt, alg::DE, obj, dynamics, output)
     ini_population = ini_population[1]
     ctrl_length = length(dynamics.data.ctrl[1])
     ctrl_num = length(dynamics.data.Hc)
-    populations = repeat(dynamics, p_num)
+    populations = repeat_system(dynamics, p_num)
 
     # initialization
     initial_ctrl!(opt, ini_population, populations, p_num, opt.rng)
@@ -84,7 +84,7 @@ function update!(opt::StateOpt, alg::DE, obj, dynamics, output)
     end
     ini_population = ini_population[1]
     dim = length(dynamics.data.ψ0)
-    populations = repeat(dynamics, p_num)
+    populations = repeat_system(dynamics, p_num)
     # initialization  
     initial_state!(ini_population, populations, p_num, opt.rng)
 
@@ -408,7 +408,7 @@ function update!(opt::StateControlOpt, alg::DE, obj, dynamics, output)
     ctrl_length = length(dynamics.data.ctrl[1])
     ctrl_num = length(dynamics.data.Hc)
     dim = length(dynamics.data.ψ0)
-    populations = repeat(dynamics, p_num)
+    populations = repeat_system(dynamics, p_num)
 
     # initialization 
     initial_state!(psi0, populations, p_num, opt.rng)
@@ -506,7 +506,7 @@ function update!(opt::StateMeasurementOpt, alg::DE, obj, dynamics, output)
     psi0, measurement0 = ini_population
     dim = length(dynamics.data.ψ0)
     M_num = length(opt.M)
-    populations = repeat(dynamics, p_num)
+    populations = repeat_system(dynamics, p_num)
 
     # initialization 
     initial_state!(psi0, populations, p_num, opt.rng)
@@ -611,7 +611,7 @@ function update!(opt::ControlMeasurementOpt, alg::DE, obj, dynamics, output)
     ctrl_length = length(dynamics.data.ctrl[1])
     ctrl_num = length(dynamics.data.Hc)
     M_num = length(opt.M)
-    populations = repeat(dynamics, p_num)
+    populations = repeat_system(dynamics, p_num)
 
     # initialization 
     initial_ctrl!(opt, ctrl0, populations, p_num, opt.rng)
@@ -725,7 +725,7 @@ function update!(opt::StateControlMeasurementOpt, alg::DE, obj, dynamics, output
     ctrl_length = length(dynamics.data.ctrl[1])
     ctrl_num = length(dynamics.data.Hc)
     M_num = length(opt.M)
-    populations = repeat(dynamics, p_num)
+    populations = repeat_system(dynamics, p_num)
 
     # initialization 
     initial_state!(psi0, populations, p_num, opt.rng)
